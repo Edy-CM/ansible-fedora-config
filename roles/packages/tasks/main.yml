@@ -1,0 +1,46 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/packages
+- name: Install RPM Fusion Free Repository
+  ansible.builtin.dnf:
+    name: rpmfusion-free-release
+    state: present
+    update_cache: true
+  
+- name: Install RPM Fusion Nonfree repository
+  ansible.builtin.dnf:
+    name: rpmfusion-nonfree-release
+    state: present
+    update_cache: true  
+
+- name: Update & Upgrade dnf
+  ansible.builtin.dnf:
+    state: latest
+    update_cache: true
+  when: (ansible_facts['distribution'] | lower) == 'fedora'
+  register: dnf_update_result
+
+- name: Debug - Updated Packages
+  ansible.builtin.debug:
+    msg: "The pakages where updated correctly"
+  when:
+    - (ansible_facts['distribution'] | lower) == "fedora"
+    - dnf_update_result is changed
+
+- name: Debug - Already at latest
+  ansible.builtin.debug:
+    msg: "All packages were already at latest."
+  when:
+    - (ansible_facts['distribution'] | lower) == "fedora"
+    - dnf_update_result is not changed
+
+- name: Install Packages
+  ansible.builtin.dnf:
+    name: "{{ packages_list }}"
+    state: present
+
+- name: Uninstall packages
+  ansible.builtin.dnf:
+    name: "{{ delete_packages_list }}"
+    state: absent
+...

@@ -1,0 +1,11 @@
+---
+- name: Main Playbook
+  hosts: all
+  become: true
+
+  roles:
+    - role: packages
+      name: Most used packages
+      tags:
+        - packages
+...
