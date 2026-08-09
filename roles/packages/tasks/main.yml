@@ -13,6 +13,12 @@
     state: present
     update_cache: true  
 
+- name: Add Docker CE repository
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/fedora/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0644'
+
 - name: Update & Upgrade dnf
   ansible.builtin.dnf:
     state: latest
@@ -39,8 +45,10 @@
     name: "{{ packages_list }}"
     state: present
 
-- name: Uninstall packages
-  ansible.builtin.dnf:
-    name: "{{ delete_packages_list }}"
-    state: absent
+- name: Install Opencode
+  ansible.builtin.npm:
+    name: opencode-ai
+    global: true
+  become: true
+
 ...
