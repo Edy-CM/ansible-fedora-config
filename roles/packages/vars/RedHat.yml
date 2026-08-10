@@ -10,6 +10,7 @@ packages_list_RedHat:
   - git
   - cmatrix
   - fastfetch
+  - flameshot
 
   # Contenedores & IaC
   - terraform

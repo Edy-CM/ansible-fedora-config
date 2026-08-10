@@ -8,4 +8,9 @@
       name: Most used packages
       tags:
         - packages
+    
+    - role: kitty
+      name: Kitty terminal configuration
+      tags:
+        - kitty 
 ...

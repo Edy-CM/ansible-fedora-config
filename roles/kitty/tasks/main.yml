@@ -1,3 +1,71 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/kitty
+- name: Set path variables
+  ansible.builtin.set_fact:
+    kitty_role_files: "{{ role_path }}/files"
+    kitty_user_config: "{{ lookup('ansible.builtin.env', 'HOME') }}/.config/kitty"
+
+- name: Ensure Kitty directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ kitty_role_files }}"
+    - "{{ kitty_user_config }}"
+
+# Find any local Kitty files created in ~/.config/kitty/
+- name: Find all existing config files
+  ansible.builtin.find:
+    paths: "{{ kitty_user_config }}"
+    hidden: yes
+    recurse: yes
+    file_type: file
+  register: local_kitty_files
+
+- name: Show existing dotfiles
+  ansible.builtin.debug:
+    msg: "{{ item.path }}"
+  loop: "{{ local_kitty_files.files }}"
+  loop_control:
+    label: "{{ item.path | relpath(kitty_user_config) }}"
+
+- name: Import unmanaged ~/.config/kitty files into roles/kitty/files/
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: "{{ kitty_role_files }}/{{ item.path | relpath(kitty_user_config) }}"
+    remote_src: yes
+    force: no
+    mode: '0644'
+  loop: "{{ local_kitty_files.files }}"
+  loop_control:
+    label: "{{ item.path | relpath(kitty_user_config) }}"
+
+- name: Find all tracked files in roles/kitty/files/
+  ansible.builtin.find:
+    paths: "{{ kitty_role_files }}"
+    hidden: yes
+    recurse: yes
+    file_type: file
+  register: role_kitty_files
+
+- name: Ensure subdirectories exist in ~/.config/kitty
+  ansible.builtin.file:
+    path: "{{ kitty_user_config }}/{{ item.path | relpath(kitty_role_files) | dirname }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ role_kitty_files.files }}"
+  when: "(item.path | relpath(kitty_role_files) | dirname) != '.' "
+  loop_control:
+    label: "{{ item.path | relpath(kitty_role_files) | dirname }}"
+
+- name: Create symlink from ~/.config/kitty to role files
+  ansible.builtin.file:
+    src: "{{ item.path }}"
+    dest: "{{ kitty_user_config }}/{{ item.path | relpath(kitty_role_files) }}"
+    state: link
+    force: yes
+  loop: "{{ role_kitty_files.files }}"
+  loop_control:
+    label: "{{ item.path | relpath(kitty_role_files) }}"

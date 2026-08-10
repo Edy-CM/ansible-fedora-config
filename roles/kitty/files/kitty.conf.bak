@@ -1,0 +1,10 @@
+
+# Set kitty font
+font_family      FiraCode Nerd Font
+bold_fond        auto
+italic_font      auto
+bold_italic_font auto
+font_size        13.0
+
+# Catppuccin Theme
+include themes/mocha.conf
