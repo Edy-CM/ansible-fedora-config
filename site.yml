@@ -23,4 +23,24 @@
       name: Niri configuration
       tags:
         - niri
+    
+    - role: noctalia
+      name: Nocatlia configuration
+      tags:
+        - noctalia
+    
+    - role: obsidian
+      name: Obsidian configuration
+      tags:
+        - obsidian
+    
+    - role: vscode
+      name: Visual Studio Code configuration
+      tags:
+        - vscode
+    
+    - role: zsh
+      name: Zsh configuration
+      tags:
+        - zsh
 ...
