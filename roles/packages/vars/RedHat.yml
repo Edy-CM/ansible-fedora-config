@@ -42,3 +42,4 @@ flatpak_packages_RedHat:
   - md.obsidian.Obsidian
   - com.slack.Slack
   - com.google.Chrome
+  - com.visualstudio.code
