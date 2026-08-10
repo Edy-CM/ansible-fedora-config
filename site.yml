@@ -18,4 +18,9 @@
       name: Fastfetch configuration
       tags:
         - fastfetch
+
+    - role: niri
+      name: Niri configuration
+      tags:
+        - niri
 ...

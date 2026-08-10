@@ -24,13 +24,6 @@
     file_type: file
   register: local_kitty_files
 
-- name: Show existing dotfiles
-  ansible.builtin.debug:
-    msg: "{{ item.path }}"
-  loop: "{{ local_kitty_files.files }}"
-  loop_control:
-    label: "{{ item.path | relpath(kitty_user_config) }}"
-
 - name: Import unmanaged ~/.config/kitty files into roles/kitty/files/
   ansible.builtin.copy:
     src: "{{ item.path }}"

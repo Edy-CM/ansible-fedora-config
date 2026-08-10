@@ -22,13 +22,6 @@
     recurse: yes
   register: local_fastfetch_files
 
-- name: Show existing dotfiles
-  ansible.builtin.debug:
-    msg: "{{ item.path }}"
-  loop: "{{ local_fastfetch_files.files }}"
-  loop_control:
-    label: "{{ item.path | relpath(fastfetch_user_config) }}"
-
 - name: Import unmanaged ~/.config/fastfetch files into roles/fastfetch/files
   ansible.builtin.copy:
     src: "{{ item.path }}"
