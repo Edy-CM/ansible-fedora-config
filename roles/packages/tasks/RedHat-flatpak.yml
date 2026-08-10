@@ -1,0 +1,13 @@
+- name: Add flathub remote repository
+  community.general.flatpak_remote:
+    name: flathub
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: system
+    state: present
+
+- name: Install flatpak applications
+  community.general.flatpak:
+    name: "{{ flatpak_packages_RedHat }}"
+    state: present
+    remote: flathub
+    method: system    

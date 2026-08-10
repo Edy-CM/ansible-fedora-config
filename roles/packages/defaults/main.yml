@@ -1,22 +1,4 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for roles/packages
-packages_list:
-  - kitty
-  - neovim
-  - niri
-  - terraform
-  - ansible
-  - nvm
-  - pip
-  # - cmatrix
-  - fastfetch
-  - docker-ce
-  - docker-ce-cli
-  - containerd.io
-  - docker-buildx-plugin
-  - docker-compose-plugin
-  - zsh
-
 delete_packages_list:
-  - cmatrix

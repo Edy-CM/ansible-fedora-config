@@ -1,0 +1,44 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for roles/packages
+packages_list_RedHat:
+  # Terminal & Editor
+  - kitty
+  - neovim
+  - niri
+  - zsh
+  - git
+  - cmatrix
+  - fastfetch
+
+  # Contenedores & IaC
+  - terraform
+  - ansible
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+  # Lenguajes & Runtimes
+  - nvm
+  - pip
+  - python3-pip
+
+  # Diagnóstico, JSON/YAML & Redes
+  - jq
+  - yq
+  - fzf
+  - ripgrep
+  - btop
+  - bind-utils
+  - nmap-ncat
+  - curl
+  - wget
+  - tar
+  - unzip
+
+flatpak_packages_RedHat:
+  - md.obsidian.Obsidian
+  - com.slack.Slack
+  - com.google.Chrome
