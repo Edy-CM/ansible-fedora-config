@@ -13,4 +13,9 @@
       name: Kitty terminal configuration
       tags:
         - kitty 
+
+    - role: fastfetch
+      name: Fastfetch configuration
+      tags:
+        - fastfetch
 ...
